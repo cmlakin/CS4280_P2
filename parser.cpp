@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "scanner.h"
+#include "node.h"
 #include "parser.h"
 
 using namespace std;
