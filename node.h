@@ -1,5 +1,5 @@
-#ifndef _NODE_h
-#define _NODE_h
+#ifndef NODE_h
+#define NODE_h
 
 #include <list>
 
@@ -30,4 +30,4 @@ struct node_t {
   }
 }; // end of struct node_t
 
-#endif _NODE_h
+#endif

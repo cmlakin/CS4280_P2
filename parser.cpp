@@ -2,41 +2,70 @@
 #include <fstream>
 #include "scanner.h"
 #include "node.h"
+#include "token.h"
 #include "parser.h"
 
 using namespace std;
 
-node_t * parser(istream& in) {
+istream* in;
+string fileLine;
+int lineNum = 0;
+
+Token getNextToken();
+
+node_t * parser(istream* infile) {
   Token tk;
-  //node_t* root;
-  tk = scanner();
-  //root = S();
+  node_t* root;
 
-  if (tk.ID == EOFtk){
-    continue;
-  }
-  else {
-    cout << "Error. Exiting program.";
+  in = infile;
+  if (in->eof()) {
+    cout << "Error: Empty file, no content.\n";
+    cout << "Exiting program.\n";
   }
 
-  return tk;
+  tk = getNextToken();
+
+  // if (tk.ID == EOFtk){
+  //   continue;
+  // }
+  // else {
+  //   cout << "Error. Exiting program.";
+  // }
+
+  //root = S(tk);
+
+  return root;
 }
+
+Token getNextToken() {
+  //
+  if (fileLine.length() == 0){
+
+    getline(in, fileLine);
+    if (in.eof()){
+      // return eof token - get code from p1
+    }
+    lineNum++;
+  }
+  return scanner(fileLine, lineNum);
+}
+
 // individual functions written out.
-// node_t* S(){
+// node_t* S(Token tk){
 //
 //   node_t* p = getNode(S);
 //   if (tk.ID == "Name") { // predict S->bA since bc First(bAa)
-//     p->token1 = tk; // b needed to be stored
-//     tk = scanner(); // processing b consume matching tokens
-//     p->child = A(); // processing A
+//     p->token1 = tk; // needed to be stored
+//     tk = getNextToken(); // processing and consume matching tokens
+//     p->child = A(); // processing
 //
-//     if (tk.ID == "Identifier") {  // processing a
+//     if (tk.ID == "Identifier") {  // processing
 //       tk = scanner();
 //
-//       if (tk.ID == "Spot") {  // processing a
+//       if (tk.ID == "Spot") {  // processing
 //         tk = scanner();
 //
-//         if (tk.ID == "Identifier") {  // processing a
+//         if (tk.ID == "Identifier") {  // processing
 //           tk = scanner();
 //
 //           //R();
