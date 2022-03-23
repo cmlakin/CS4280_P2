@@ -11,7 +11,7 @@
 #include <string>
 #include <fstream>
 #include <type_traits>
-#include "testScanner.h"
+#include "parser.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ int main(int argc, char * argv[]) {
     filenameIn = argv[1];
 
     inFile.open(filenameIn);
-    testScanner(inFile);
+    parser(inFile);
     inFile.close();
   }
   else if (argc > 2){
@@ -35,7 +35,7 @@ int main(int argc, char * argv[]) {
   else {
     cout << "Enter string to check for tokens.\n";
     cout << "Enter 'Done' when finished to exit program.\n";
-    testScanner(cin);
+    parser(cin);
   }
 
   cout << "End of program.\n";
