@@ -14,7 +14,7 @@ extern string tokenNames[];
 
 
 struct Token {
-  int tokenID;  // type of token
+  int ID;  // type of token
   string chars;   // characters in token
   int line;      // line number
 };

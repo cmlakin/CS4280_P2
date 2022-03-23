@@ -7,24 +7,25 @@
 
 using namespace std;
 
-istream* in;
+// istream in;
 string fileLine;
 int lineNum = 0;
 
-Token getNextToken();
+Token getNextToken(istream&);
 
-node_t * parser(istream* infile) {
+node_t * parser(istream& in) {
   Token tk;
   node_t* root;
-
-  in = infile;
-  if (in->eof()) {
+  cout << "in parser\n";
+  if (in.eof()) {
     cout << "Error: Empty file, no content.\n";
     cout << "Exiting program.\n";
   }
 
-  tk = getNextToken();
-
+  tk = getNextToken(in);
+  cout << "tk.ID = " << tk.ID << endl;
+  cout << "tk.line = " << tk.line << endl;
+  cout << "tk.chars = " << tk.chars << endl;
   // if (tk.ID == EOFtk){
   //   continue;
   // }
@@ -33,12 +34,12 @@ node_t * parser(istream* infile) {
   // }
 
   //root = S(tk);
-
+  cout << "end of parser\n";
   return root;
 }
 
-Token getNextToken() {
-  //
+Token getNextToken(istream& in) {
+  cout << "In getNextToken\n";
   if (fileLine.length() == 0){
 
     getline(in, fileLine);
@@ -51,7 +52,7 @@ Token getNextToken() {
 }
 
 // individual functions written out.
-// node_t* S(Token tk){
+// node_t* S(istream& in, Token tk){
 //
 //   node_t* p = getNode(S);
 //   if (tk.ID == "Name") { // predict S->bA since bc First(bAa)
@@ -91,7 +92,7 @@ Token getNextToken() {
 //   }
 // }
 // // need help with this one
-// node_t* R() {
+// node_t* R(istream& in, Token tk) {
 //
 //   if (tk.ID == "Place") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node ???
@@ -108,7 +109,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* E() {
+// node_t* E(istream& in, Token tk) {
 //
 //   if (tk.ID == "Show") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -135,7 +136,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* A() {
+// node_t* A(istream& in, Token tk) {
 //
 //   if (tk.ID == "Name") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -163,7 +164,7 @@ Token getNextToken() {
 // }
 //
 // //need help with this one
-// node_t* B() {
+// node_t* B(istream& in, Token tk) {
 //
 //   if (tk.ID == ".") {  // predicts A->dSa
 //     // node_t* p = getNode(A); // now we need node
@@ -183,7 +184,7 @@ Token getNextToken() {
 //   }
 // }
 // // need help
-// node_t* C() {
+// node_t* C(istream& in, Token tk) {
 //
 //   if (tk.ID == d) {  // predicts A->dSa
 //     // node_t* p = getNode(A); // now we need node
@@ -204,7 +205,7 @@ Token getNextToken() {
 // }
 //
 // // need help
-// node_t* D() {
+// node_t* D(istream& in, Token tk) {
 //
 //   if (tk.ID == d) {  // predicts A->dSa
 //     // node_t* p = getNode(A); // now we need node
@@ -224,7 +225,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* F() {
+// node_t* F(istream& in, Token tk) {
 //
 //   if (tk.ID == "{") {  // predicts A->dSa
 //     // node_t* p = getNode(A); // now we need node
@@ -266,7 +267,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* G() {
+// node_t* G(istream& in, Token tk) {
 //
 //   if (tk.ID == "Here") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -293,7 +294,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* T() {
+// node_t* T(istream& in, Token tk) {
 //
 //   if (tk.ID == "<<") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -314,7 +315,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* V() {
+// node_t* V(istream& in, Token tk) {
 //
 //   if (tk.ID == "+") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -339,7 +340,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* H() {
+// node_t* H(istream& in, Token tk) {
 //
 //   if (tk.ID == "/") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -354,7 +355,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* J() {
+// node_t* J(istream& in, Token tk) {
 //
 //   if (tk.ID == "Assign") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -376,7 +377,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* K() {
+// node_t* K(istream& in, Token tk) {
 //
 //   if (tk.ID == "Spot") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -433,7 +434,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* L() {
+// node_t* L(istream& in, Token tk) {
 //
 //   if (tk.ID == "Flip") {  // predicts A->dSa
 //     // node_t* p = getNode(A); // now we need node
@@ -453,7 +454,7 @@ Token getNextToken() {
 //   }
 // }
 // //need help
-// node_t* W() {
+// node_t* W(istream& in, Token tk) {
 //
 //   if (tk.ID == "Number") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node
@@ -476,7 +477,7 @@ Token getNextToken() {
 //   }
 // }
 //
-// node_t* Z() {
+// node_t* Z(istream& in, Token tk) {
 //
 //   if (tk.ID == "Identifier") {  // predicts A->dSa
 //     node_t* p = getNode(A); // now we need node

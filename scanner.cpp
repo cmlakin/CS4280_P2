@@ -30,7 +30,8 @@ const int table[statesRow][tokensCol] = { {   1,    3,    4,    5,   -1,    6,  
 
 // pass 2 arguemnts - string and line number
 Token scanner(string& fileString, int lineN)  {
-  // cout << "*** In scanner.cpp *** \n";
+  cout << "*** In scanner.cpp *** \n";
+  cout << "filestring = " << fileString << endl;
   Token temp;
 
   temp = FSDriver(fileString, lineN);
@@ -164,7 +165,7 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
     //cout << "next state = " << nextState << endl;
     if (nextState < 0) {
       //Error(); // report error and exit
-      token.tokenID = nextState;
+      token.ID = nextState;
       token.chars = nextChar;
       return token;
     }
@@ -174,17 +175,17 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
         int check = kwCheck(s);
         if (check) {
           //cout << "KW_TK\n";
-          token.tokenID = nextState;
+          token.ID = nextState;
           token.chars = s;
           return token; // or specific keyword
         }
         else if (s == "Done"){
-          token.tokenID = 1007;
+          token.ID = 1007;
           return token;
         }
         else {
           //error
-          token.tokenID = -2;
+          token.ID = -2;
           token.chars = s;
           return token;
         }
@@ -192,7 +193,7 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
       }
       else if (nextState >= ID_tk && nextState <= CMT_tk){
         // TODO build out individual token types
-        token.tokenID = nextState;
+        token.ID = nextState;
         token.chars = s;
 
         return token;
@@ -201,7 +202,7 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
     }
     else if (nextState == 500) {
       fileString.erase(0);
-      token.tokenID = 500;
+      token.ID = 500;
       return token;
     }
     else {  // not FINAL  // this would be the default statement in switch
