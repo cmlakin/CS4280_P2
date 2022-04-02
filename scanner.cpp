@@ -215,5 +215,4 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
     }
   }
   return token;
-
 }
