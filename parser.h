@@ -6,6 +6,7 @@
 using namespace std;
 
 node_t * parser(istream&);
+Token getNextToken(istream&);
 
 node_t* S(istream&, Token);
 node_t* R(istream&, Token);
