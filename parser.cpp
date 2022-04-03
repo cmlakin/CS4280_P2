@@ -103,8 +103,6 @@ node_t* R(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
-
     A(in, tk);
     B(in, tk);
     if (tk.chars == "Home"){
@@ -123,7 +121,7 @@ node_t* E(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     if (tk.ID == 1002) {
       //done
@@ -144,7 +142,7 @@ node_t* A(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    // S(in, tk);
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
@@ -166,7 +164,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     C(in, tk);
     if (tk.chars == ".") {
@@ -244,7 +242,7 @@ node_t* C(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     F(in, tk);
   }
@@ -270,7 +268,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     Z(in, tk);
   }
@@ -279,7 +277,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     J(in, tk);
   }
@@ -288,7 +286,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     K(in, tk);
   }
@@ -306,7 +304,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
     E(in, tk);
   }
@@ -326,54 +324,50 @@ node_t* D(istream& in, Token tk) {
 
 node_t* F(istream& in, Token tk) {
 
-  if (tk.chars == "{") {
+  if (tk.chars == "If") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    //S(in, tk);
+
+
+
+    if (tk.ID == 1002) {
+      tk = getNextToken(in);
+
+      T(in, tk);
+      W(in, tk);
+      D(in, tk);
+
+      if (tk.chars == "}") {
+        //done
+      }
+    }
+  }
+  else if (tk.chars  == "Do") {
+    // node_t* p = getNode(A);
+    // p->token1 = tk;
+    tk = getNextToken(in);
+    // p->child = S();
     S(in, tk);
 
-    if (tk.chars == "If") {
+    if (tk.chars == "Again") {
       tk = getNextToken(in);
 
-      if (tk.ID == 1002) {
-        tk = getNextToken(in);
+      D(in, tk);
+      T(in, tk);
+      W(in, tk);
 
-        T(in, tk);
-        W(in, tk);
-        D(in, tk);
-
-        if (tk.chars == "}") {
-          //done
-        }
+      if (tk.chars == "}") {
+        //done
       }
-    }
-    else if (tk.chars  == "Do") {
-      // node_t* p = getNode(A);
-      // p->token1 = tk;
-      tk = getNextToken(in);
-      // p->child = S();
-      S(in, tk);
-
-      if (tk.chars == "Again") {
-        tk = getNextToken(in);
-
-        D(in, tk);
-        T(in, tk);
-        W(in, tk);
-
-        if (tk.chars == "}") {
-          //done
-        }
-      }
-    }
-    else {
-      cout << "Error. Exiting program.";
     }
   }
   else {
-    //return error
+    cout << "Error. Exiting program.";
   }
+
 }
 
 node_t* G(istream& in, Token tk) {
@@ -411,7 +405,7 @@ node_t* T(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
   }
   else if (tk.chars == "<-") {
@@ -419,7 +413,7 @@ node_t* T(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    S(in, tk);
+    //S(in, tk);
 
   }
   else {
