@@ -54,7 +54,7 @@ Token getNextToken(istream& in) {
 
 //individual functions written out.
 node_t* S(istream& in, Token tk){
-
+  cout << "-- in s\n";
   //node_t* p = getNode(S);
   if (tk.chars == "Name") {
     //p->token1 = tk;
@@ -97,7 +97,7 @@ node_t* S(istream& in, Token tk){
 }
 // need help with this one
 node_t* R(istream& in, Token tk) {
-
+  cout << "-- in r\n";
   if (tk.chars == "Place") {
     // node_t* p = getNode(A); // now we need node ???
     // p->token1 = tk;
@@ -115,7 +115,7 @@ node_t* R(istream& in, Token tk) {
 }
 
 node_t* E(istream& in, Token tk) {
-
+  cout << "-- in e\n";
   if (tk.chars == "Show") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -136,7 +136,7 @@ node_t* E(istream& in, Token tk) {
 }
 
 node_t* A(istream& in, Token tk) {
-
+  cout << "-- in a\n";
   if (tk.chars == "Name") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -158,7 +158,7 @@ node_t* A(istream& in, Token tk) {
 }
 
 node_t* B(istream& in, Token tk) {
-
+  cout << "-- in b\n";
   if (tk.chars == ".") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -236,7 +236,7 @@ node_t* B(istream& in, Token tk) {
 }
 
 node_t* C(istream& in, Token tk) {
-
+  cout << "-- in c\n";
   if (tk.chars == "{") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -262,7 +262,7 @@ node_t* C(istream& in, Token tk) {
 
 
 node_t* D(istream& in, Token tk) {
-
+  cout << "-- in d\n";
   if (tk.chars == "/") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -323,7 +323,7 @@ node_t* D(istream& in, Token tk) {
 }
 
 node_t* F(istream& in, Token tk) {
-
+  cout << "-- in f\n";
   if (tk.chars == "If") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -371,7 +371,7 @@ node_t* F(istream& in, Token tk) {
 }
 
 node_t* G(istream& in, Token tk) {
-
+  cout << "-- in g\n";
   if (tk.chars == "Here") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -399,7 +399,7 @@ node_t* G(istream& in, Token tk) {
 }
 
 node_t* T(istream& in, Token tk) {
-
+  cout << "-- in t\n";
   if (tk.chars == "<<") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -422,7 +422,7 @@ node_t* T(istream& in, Token tk) {
 }
 
 node_t* V(istream& in, Token tk) {
-
+  cout << "-- in v\n";
   if (tk.chars == "+") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
@@ -450,7 +450,7 @@ node_t* V(istream& in, Token tk) {
 }
 
 node_t* H(istream& in, Token tk) {
-
+  cout << "-- in h\n";
   if (tk.chars == "/") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
@@ -466,7 +466,7 @@ node_t* H(istream& in, Token tk) {
 }
 
 node_t* J(istream& in, Token tk) {
-
+  cout << "-- in j\n";
   if (tk.chars == "Assign") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
@@ -489,7 +489,7 @@ node_t* J(istream& in, Token tk) {
 }
 
 node_t* K(istream& in, Token tk) {
-
+  cout << "-- in k\n";
   if (tk.chars == "Spot") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
@@ -549,7 +549,7 @@ node_t* K(istream& in, Token tk) {
 }
 
 node_t* L(istream& in, Token tk) {
-
+  cout << "-- in l\n";
   if (tk.chars == "Flip") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
@@ -570,7 +570,7 @@ node_t* L(istream& in, Token tk) {
 }
 
 node_t* W(istream& in, Token tk) {
-
+  cout << "-- in w\n";
   if (tk.ID == 1004) {
     //node_t* p = getNode(A);
     //p->token1 = tk;
@@ -602,7 +602,7 @@ node_t* W(istream& in, Token tk) {
 }
 
 node_t* Z(istream& in, Token tk) {
-
+  cout << "-- in w\n";
   if (tk.ID == 1002) {
     //node_t* p = getNode(A);
     //p->token1 = tk;
