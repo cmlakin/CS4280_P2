@@ -103,6 +103,7 @@ node_t* R(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     A(in, tk);
     B(in, tk);
@@ -122,6 +123,7 @@ node_t* E(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.ID == 1002) {
       //done
@@ -142,6 +144,7 @@ node_t* A(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
@@ -163,6 +166,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     C(in, tk);
     if (tk.chars == ".") {
@@ -179,6 +183,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     Z(in, tk);
   }
@@ -187,6 +192,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     J(in, tk);
   }
@@ -195,6 +201,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     K(in, tk);
   }
@@ -203,6 +210,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     L(in, tk);
   }
@@ -211,6 +219,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     E(in, tk);
   }
@@ -219,6 +228,7 @@ node_t* B(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     F(in, tk);
   }
@@ -234,6 +244,7 @@ node_t* C(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     F(in, tk);
   }
@@ -242,6 +253,7 @@ node_t* C(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     G(in, tk);
   }
@@ -258,6 +270,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     Z(in, tk);
   }
@@ -266,6 +279,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     J(in, tk);
   }
@@ -274,6 +288,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     K(in, tk);
   }
@@ -282,6 +297,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     L(in, tk);
   }
@@ -290,6 +306,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     E(in, tk);
   }
@@ -298,6 +315,7 @@ node_t* D(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     F(in, tk);
   }
@@ -313,6 +331,7 @@ node_t* F(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.chars == "If") {
       tk = getNextToken(in);
@@ -334,6 +353,7 @@ node_t* F(istream& in, Token tk) {
       // p->token1 = tk;
       tk = getNextToken(in);
       // p->child = S();
+      S(in, tk);
 
       if (tk.chars == "Again") {
         tk = getNextToken(in);
@@ -363,6 +383,7 @@ node_t* G(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.ID == 1004) {
       tk = getNextToken(in);
@@ -390,6 +411,7 @@ node_t* T(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
   }
   else if (tk.chars == "<-") {
@@ -397,6 +419,7 @@ node_t* T(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
   }
   else {
@@ -411,18 +434,21 @@ node_t* V(istream& in, Token tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
   }
   else if (tk.chars == "%") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
   }
   else if (tk.chars == "&") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
   }
   else {
     // return error
@@ -436,6 +462,7 @@ node_t* H(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     Z(in, tk);
   }
@@ -451,6 +478,7 @@ node_t* J(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.ID == 1002) {  // processing a
       tk = getNextToken(in);
@@ -473,6 +501,7 @@ node_t* K(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.ID == 1004) {
       tk = getNextToken(in);
@@ -497,6 +526,7 @@ node_t* K(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
       if (tk.ID == 1002) {
         tk = getNextToken(in);
@@ -531,6 +561,7 @@ node_t* L(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
@@ -551,6 +582,7 @@ node_t* W(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
 
     if (tk.chars == ".") {
       tk = getNextToken(in);
@@ -582,12 +614,14 @@ node_t* Z(istream& in, Token tk) {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
   }
   else if (tk.ID == 1004) {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
+    S(in, tk);
   }
   else {
     //return error
