@@ -252,7 +252,7 @@ node_t* B(istream& in, Token& tk) {
 
     E(in, tk);
     cout << "-- in b\n";
-    tk = getNextToken(in);
+    //tk = getNextToken(in);
   }
   else if (tk.chars == "{") {
     // node_t* p = getNode(A);
@@ -263,10 +263,10 @@ node_t* B(istream& in, Token& tk) {
 
     F(in, tk);
     cout << "-- in b\n";
-    tk = getNextToken(in);
+    //tk = getNextToken(in);
   }
   else {  // predicts B->(epslon)
-    return NULL;
+    //return NULL;
   }
 }
 
