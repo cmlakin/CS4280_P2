@@ -7,11 +7,8 @@
 
 using namespace std;
 
-// istream in;
 string fileLine;
 int lineNum = 0;
-
-//Token getNextToken(istream&);
 
 node_t * parser(istream& in) {
   Token tk;
@@ -73,9 +70,10 @@ node_t* S(istream& in, Token& tk){
         if (tk.ID == 1002) {
           tk = getNextToken(in);
           R(in, tk);
-          cout << "-- in s\n";
-          tk = getNextToken(in);
+          cout << "-- in s after r\n";
+          //tk = getNextToken(in);
           E(in, tk);
+          cout << "-- in s after e\n";
         }
         else {
           cout << "Error. S1 Exiting program.\n";
@@ -98,7 +96,7 @@ node_t* S(istream& in, Token& tk){
 }
 // need help with this one
 node_t* R(istream& in, Token& tk) {
-  cout << "-- in r\n";
+  //cout << "-- in r\n";
   cout << "in R token.chars = " << tk.chars << endl;
   if (tk.chars == "Place") {
     // node_t* p = getNode(A); // now we need node ???
@@ -108,12 +106,12 @@ node_t* R(istream& in, Token& tk) {
     //cout << "in R token.chars = " << tk.chars << endl;
 
     A(in, tk);
-    cout << "-- in r2\n";
+    cout << "-- in r after  a\n";
     //tk = getNextToken(in);
     //cout << "after A token.chars = " << tk.chars << endl;
     cout << "calling B()\n";
     B(in, tk);
-    cout << "-- in r3\n";
+    cout << "-- in r after b\n";
     tk = getNextToken(in);
     if (tk.chars == "Home"){
       tk = getNextToken(in);
@@ -137,7 +135,7 @@ node_t* E(istream& in, Token& tk) {
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
-      cout << "in E after id token.chars = " << tk.chars << endl;
+      //cout << "in E after id token.chars = " << tk.chars << endl;
       //done
     }
     else {
@@ -186,13 +184,13 @@ node_t* B(istream& in, Token& tk) {
 
     C(in, tk);
     //cout << "after C in B token.chars = " << tk.chars << endl;
-    cout << "-- in b\n";
+    cout << "-- in b  after <C>\n";
     tk = getNextToken(in);
-    if (tk.chars == ".") {
+    if (tk.chars == ".") { //  not getting  the . here
       tk = getNextToken(in);
       B(in, tk);
-      cout << "-- in b\n";
-      tk = getNextToken(in);
+      cout << "-- in b after .<B>\n";
+      //tk = getNextToken(in);
       //done
     }
     else {
@@ -207,7 +205,7 @@ node_t* B(istream& in, Token& tk) {
     //S(in, tk);
 
     Z(in, tk);
-    cout << "-- in b\n";
+    cout << "-- in b after Z\n";
     tk = getNextToken(in);
   }
   else if (tk.chars == "Assign") {
@@ -218,7 +216,7 @@ node_t* B(istream& in, Token& tk) {
     //S(in, tk);
 
     J(in, tk);
-    cout << "-- in b\n";
+    cout << "-- in b after J\n";
     tk = getNextToken(in);
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
@@ -229,7 +227,7 @@ node_t* B(istream& in, Token& tk) {
     //S(in, tk);
 
     K(in, tk);
-    cout << "-- in b\n";
+    cout << "-- in b  after K\n";
     tk = getNextToken(in);
   }
   else if (tk.chars == "Flip") {
@@ -240,7 +238,7 @@ node_t* B(istream& in, Token& tk) {
     //S(in, tk);
 
     L(in, tk);
-    cout << "-- in b\n";
+    cout << "-- in b after L\n";
     tk = getNextToken(in);
   }
   else if (tk.chars == "Show") {
@@ -251,7 +249,7 @@ node_t* B(istream& in, Token& tk) {
     //S(in, tk);
 
     E(in, tk);
-    cout << "-- in b\n";
+    cout << "-- in b after E\n";
     //tk = getNextToken(in);
   }
   else if (tk.chars == "{") {
@@ -262,7 +260,7 @@ node_t* B(istream& in, Token& tk) {
     //S(in, tk);
 
     F(in, tk);
-    cout << "-- in b\n";
+    cout << "-- in b after F\n";
     //tk = getNextToken(in);
   }
   else {  // predicts B->(epslon)
