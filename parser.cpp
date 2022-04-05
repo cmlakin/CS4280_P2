@@ -44,34 +44,37 @@ Token getNextToken(istream& in) {
       // return eof token - get code from p1
     }
     lineNum++;
-    cout << "fileLine = " << fileLine << endl;
+    //cout << "fileLine = " << fileLine << endl;
   }
   return scanner(fileLine, lineNum);
 }
 
 //individual functions written out.
 node_t* S(istream& in, Token& tk){
-  cout << "-- in s\n";
+  //cout << "-- in s\n";
+  cout << "in S token.chars = " << tk.chars << endl;
   //node_t* p = getNode(S);
   if (tk.chars == "Name") {
     //p->token1 = tk;
     tk = getNextToken(in);
     //p->child = A();
-
+    cout << "in S token.chars = " << tk.chars << endl;
     // check if valid identifier token
     if (tk.ID == 1002) {
       tk = getNextToken(in);
-
+      cout << "in S token.chars = " << tk.chars << endl;
       // check for specific keyword token
       if (tk.chars == "Spot") {
         tk = getNextToken(in);
-
+        cout << "in S token.chars = " << tk.chars << endl;
         // check if valid identifier token
         if (tk.ID == 1002) {
           tk = getNextToken(in);
+          cout << "calling R\n";
           R(in, tk);
           cout << "-- in s after r\n";
           //tk = getNextToken(in);
+          cout << "calling E\n";
           E(in, tk);
           cout << "-- in s after e\n";
         }
@@ -103,18 +106,16 @@ node_t* R(istream& in, Token& tk) {
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
-    //cout << "in R token.chars = " << tk.chars << endl;
-
+    cout << "calling A\n";
     A(in, tk);
     cout << "-- in r after  a\n";
-    //tk = getNextToken(in);
-    //cout << "after A token.chars = " << tk.chars << endl;
-    cout << "calling B()\n";
+    cout << "calling B\n";
     B(in, tk);
     cout << "-- in r after b\n";
-    tk = getNextToken(in);
+    cout << "in R token.chars = " << tk.chars << endl;
     if (tk.chars == "Home"){
       tk = getNextToken(in);
+      cout << "in R token.chars = " << tk.chars << endl;
       //done
     }
   }
@@ -133,9 +134,10 @@ node_t* E(istream& in, Token& tk) {
     //p->child = S();
     //S(in, tk);
 
+    cout << "in E token.chars = " << tk.chars << endl;
     if (tk.ID == 1002) {
       tk = getNextToken(in);
-      //cout << "in E after id token.chars = " << tk.chars << endl;
+      cout << "in E token.chars = " << tk.chars << endl;
       //done
     }
     else {
@@ -148,20 +150,20 @@ node_t* E(istream& in, Token& tk) {
 }
 
 node_t* A(istream& in, Token& tk) {
-  cout << "-- in a\n";
+
   cout << "in A token.chars = " << tk.chars << endl;
 
   if (tk.chars == "Name") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in A token.chars = " << tk.chars << endl;
     //p->child = S();
     // S(in, tk);
-    //cout << "after Name token.chars = " << tk.chars << endl;
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
-      //cout << "after id token.chars = " << tk.chars << endl;
+      cout << "in A token.chars = " << tk.chars << endl;
     }
     else {
       cout << "Error. A1 Exiting program.\n";
@@ -173,24 +175,24 @@ node_t* A(istream& in, Token& tk) {
 }
 
 node_t* B(istream& in, Token& tk) {
-  //cout << "-- in b\n";
-  cout << "in B token.chars = " << tk.chars << endl;
+
   if (tk.chars == ".") {
+    cout << "in B token.chars = " << tk.chars << endl;
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "in B token.chars = " << tk.chars << "\n calling C\n";
     C(in, tk);
-    //cout << "after C in B token.chars = " << tk.chars << endl;
     cout << "-- in b  after <C>\n";
-    tk = getNextToken(in);
-    if (tk.chars == ".") { //  not getting  the . here
+    cout << "in B token.chars = " << tk.chars << endl;
+    if (tk.chars == ".") {
       tk = getNextToken(in);
+      cout << "in B token.chars = " << tk.chars << "\n calling B\n";
       B(in, tk);
       cout << "-- in b after .<B>\n";
-      //tk = getNextToken(in);
+      cout << "in B token.chars = " << tk.chars << "\n calling B\n";
       //done
     }
     else {
@@ -200,67 +202,65 @@ node_t* B(istream& in, Token& tk) {
   else if (tk.chars == "/") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
-    Z(in, tk);
-    cout << "-- in b after Z\n";
-    tk = getNextToken(in);
+    cout << "calling D /\n";
+    D(in, tk);
+    cout << "-- in b after D /\n";
+    cout << "in B token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Assign") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
+    cout << "calling D Assign\n";
+    D(in, tk);
+    cout << "-- in b after D Assign\n";
+    cout << "in B token.chars = " << tk.chars << endl;
 
-    J(in, tk);
-    cout << "-- in b after J\n";
-    tk = getNextToken(in);
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
+    cout << "calling D Spot/Move\n";
+    D(in, tk);
+    cout << "-- in b after D Spot/Move\n";
+    cout << "in B token.chars = " << tk.chars << endl;
 
-    K(in, tk);
-    cout << "-- in b  after K\n";
-    tk = getNextToken(in);
   }
   else if (tk.chars == "Flip") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
+    cout << "calling D Flip\n";
+    D(in, tk);
+    cout << "-- in b after D Flip\n";
+    //tk = getNextToken(in);
+    cout << "in B token.chars = " << tk.chars << endl;
 
-    L(in, tk);
-    cout << "-- in b after L\n";
-    tk = getNextToken(in);
   }
   else if (tk.chars == "Show") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
-    E(in, tk);
-    cout << "-- in b after E\n";
+    cout << "calling D Show\n";
+    D(in, tk);
+    cout << "-- in b after D Show\n";
     //tk = getNextToken(in);
   }
   else if (tk.chars == "{") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
-    F(in, tk);
-    cout << "-- in b after F\n";
+    cout << "calling D {\n";
+    D(in, tk);
+    cout << "-- in b after D {\n";
     //tk = getNextToken(in);
   }
   else {  // predicts B->(epslon)
@@ -274,24 +274,23 @@ node_t* C(istream& in, Token& tk) {
   if (tk.chars == "{") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling F\n";
     F(in, tk);
-    cout << "-- in c\n";
-    tk = getNextToken(in);
+    cout << "-- in c after f\n";
+    cout << "in C token.chars = " << tk.chars << endl;
+
   }
   else if (tk.chars == "Here") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling G\n";
     G(in, tk);
-    cout << "-- in c\n";
-    tk = getNextToken(in);
+    cout << "-- in c after g\n";
+    cout << "in C token.chars = " << tk.chars << endl;
   }
   else {
     cout << "Error. C Exiting program.\n";
@@ -300,53 +299,48 @@ node_t* C(istream& in, Token& tk) {
 
 
 node_t* D(istream& in, Token& tk) {
-  //cout << "-- in d\n";
+
   cout << "in D token.chars = " << tk.chars << endl;
   if (tk.chars == "/") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    //tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
-    Z(in, tk);
-    //cout << "-- in d\n";
-    //cout << "in D after Z token.chars = " << tk.chars << endl;
-    tk = getNextToken(in);
+    cout << "calling H\n";
+    H(in, tk);
+    cout << "-- in d after H\n";
+    cout << "in D after H token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Assign") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    //tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling J\n";
     J(in, tk);
-    //cout << "-- in d\n";
-    //cout << "in D after J token.chars = " << tk.chars << endl;
-    tk = getNextToken(in);
+    cout << "-- in d after j\n";
+    cout << "in D after J token.chars = " << tk.chars << endl;
+
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    //tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling K\n";
     K(in, tk);
-    cout << "-- in d\n";
-    tk = getNextToken(in);
+    cout << "-- in d after k\n";
+    cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Flip") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
-    //tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling L\n";
     L(in, tk);
-    cout << "-- in d\n";
-    tk = getNextToken(in);
+    cout << "-- in d after l\n";
+    cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Show") {
     // node_t* p = getNode(A);
@@ -354,10 +348,10 @@ node_t* D(istream& in, Token& tk) {
     //tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling E\n";
     E(in, tk);
-    cout << "-- in d\n";
-    tk = getNextToken(in);
+    cout << "-- in d after e\n";
+    cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "{") {
     // node_t* p = getNode(A);
@@ -365,10 +359,10 @@ node_t* D(istream& in, Token& tk) {
     //tk = getNextToken(in);
     //p->child = S();
     //S(in, tk);
-
+    cout << "calling F\n";
     F(in, tk);
-    cout << "-- in d\n";
-    tk = getNextToken(in);
+    cout << "-- in d after f\n";
+    cout << "in D token.chars = " << tk.chars << endl;
   }
   else {
     cout << "Error. D Exiting program.\n";
@@ -376,32 +370,33 @@ node_t* D(istream& in, Token& tk) {
 }
 
 node_t* F(istream& in, Token& tk) {
-  //cout << "-- in f\n";
+
   cout << "in F token.chars = " << tk.chars << endl;
-  //if (tk.chars == "{") {
+  if (tk.chars == "{") {
+    tk = getNextToken(in);
+    cout << "in F token.chars = " << tk.chars << endl;
     if (tk.chars == "If") {
       // node_t* p = getNode(A);
       // p->token1 = tk;
       tk = getNextToken(in);
+      cout << "in F token.chars = " << tk.chars << endl;
       //p->child = S();
       //S(in, tk);
 
-
-
       if (tk.ID == 1002) {
         tk = getNextToken(in);
+        cout << "in F token.chars = " << tk.chars << "\n calling T\n";
         T(in, tk);
-        cout << "-- in f\n";
-        //tk = getNextToken(in);
+        cout << "-- in f after t\n calling W\n";
         W(in, tk);
-        cout << "-- in f\n";
-        //tk = getNextToken(in);
+        cout << "-- in f after w\ncalling D\n";
         D(in, tk);
-        cout << "-- in f\n";
-        tk = getNextToken(in);
+        cout << "-- in f after d\n";
+        cout << "in F token.chars = " << tk.chars << endl;
 
         if (tk.chars == "}") {
           tk = getNextToken(in);
+          cout << "in F token.chars = " << tk.chars << endl;
           //done
         }
       }
@@ -410,28 +405,30 @@ node_t* F(istream& in, Token& tk) {
       // node_t* p = getNode(A);
       // p->token1 = tk;
       tk = getNextToken(in);
+      cout << "in F token.chars = " << tk.chars << endl;
       // p->child = S();
       //S(in, tk);
 
       if (tk.chars == "Again") {
         tk = getNextToken(in);
+        cout << "in F token.chars = " << tk.chars << "\ncalling D\n";
         D(in, tk);
-        cout << "-- in f\n";
-        //tk = getNextToken(in);
+        cout << "-- in f after d\ncalling T\n";
         T(in, tk);
-        cout << "-- in f\n";
-        //tk = getNextToken(in);
+        cout << "-- in f after t\ncalling W\n";
         W(in, tk);
-        cout << "-- in f\n";
+        cout << "-- in f after w\n";
         tk = getNextToken(in);
+        cout << "in F token.chars = " << tk.chars << endl;
 
         if (tk.chars == "}") {
           tk = getNextToken(in);
+          cout << "in F token.chars = " << tk.chars << endl;
           //done
         }
       }
     }
-  //}
+  }
   else {
     cout << "Error. F Exiting program.\n";
   }
@@ -439,20 +436,23 @@ node_t* F(istream& in, Token& tk) {
 }
 
 node_t* G(istream& in, Token& tk) {
-  //cout << "-- in g\n";
+
   cout << "in G token.chars = " << tk.chars << endl;
   if (tk.chars == "Here") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in G token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
     if (tk.ID == 1004) {
       tk = getNextToken(in);
+      cout << "in G token.chars = " << tk.chars << endl;
 
       if (tk.chars == "There") {
         tk = getNextToken(in);
+        cout << "in G token.chars = " << tk.chars << endl;
       }
       else {
         cout << "Error. G1 Exiting program.\n";
@@ -468,12 +468,13 @@ node_t* G(istream& in, Token& tk) {
 }
 
 node_t* T(istream& in, Token& tk) {
-  //cout << "-- in t\n";
+
   cout << "in T token.chars = " << tk.chars << endl;
   if (tk.chars == "<<") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in T token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
@@ -482,6 +483,7 @@ node_t* T(istream& in, Token& tk) {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in T token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
@@ -492,12 +494,13 @@ node_t* T(istream& in, Token& tk) {
 }
 
 node_t* V(istream& in, Token& tk) {
-  //cout << "-- in v\n";
+
   cout << "in V token.chars = " << tk.chars << endl;
   if (tk.chars == "+") {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in V token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
   }
@@ -505,6 +508,7 @@ node_t* V(istream& in, Token& tk) {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in V token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
   }
@@ -512,6 +516,7 @@ node_t* V(istream& in, Token& tk) {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in V token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
   }
@@ -521,18 +526,19 @@ node_t* V(istream& in, Token& tk) {
 }
 
 node_t* H(istream& in, Token& tk) {
-  //cout << "-- in h\n";
+
   cout << "in H token.chars = " << tk.chars << endl;
   if (tk.chars == "/") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in H token.chars = " << tk.chars << "\ncalling Z\n";
     //p->child = S();
     //S(in, tk);
 
     Z(in, tk);
-    cout << "-- in h\n";
-    tk = getNextToken(in);
+    cout << "-- in h after z\n";
+    cout << "in H token.chars = " << tk.chars << endl;
   }
   else {
     cout << "Error. H Exiting program.\n";
@@ -540,20 +546,23 @@ node_t* H(istream& in, Token& tk) {
 }
 
 node_t* J(istream& in, Token& tk) {
-  //cout << "-- in j\n";
+
   cout << "in J token.chars = " << tk.chars << endl;
   if (tk.chars == "Assign") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in J token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
+      cout << "in J token.chars = " << tk.chars << "\ncalling D()\n";
       D(in, tk);
-      cout << "-- in j\n";
+      cout << "-- in j after D\n";
       tk = getNextToken(in);
+      cout << "in J token.chars = " << tk.chars << endl;
     }
     else {
       cout << "Error. J1 Exiting program.\n";
@@ -565,23 +574,27 @@ node_t* J(istream& in, Token& tk) {
 }
 
 node_t* K(istream& in, Token& tk) {
-  //cout << "-- in k\n";
+
   cout << "in K token.chars = " << tk.chars << endl;
   if (tk.chars == "Spot") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in K token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
     if (tk.ID == 1004) {
       tk = getNextToken(in);
+      cout << "in K token.chars = " << tk.chars << endl;
 
       if (tk.chars == "Show") {
         tk = getNextToken(in);
+        cout << "in K token.chars = " << tk.chars << endl;
 
         if (tk.ID == 1004) {
           tk = getNextToken(in);
+          cout << "in K token.chars = " << tk.chars << endl;
         }
         else {
           cout << "Error. K1 Exiting program.\n";
@@ -596,17 +609,21 @@ node_t* K(istream& in, Token& tk) {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in K token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
       if (tk.ID == 1002) {
         tk = getNextToken(in);
+        cout << "in K token.chars = " << tk.chars << endl;
 
         if (tk.chars == "Show") {
           tk = getNextToken(in);
+          cout << "in K token.chars = " << tk.chars << endl;
 
           if (tk.ID == 1002) {
             tk = getNextToken(in);
+            cout << "in K token.chars = " << tk.chars << endl;
           }
           else {
             cout << "Error. K3 Exiting program.\n";
@@ -626,17 +643,19 @@ node_t* K(istream& in, Token& tk) {
 }
 
 node_t* L(istream& in, Token& tk) {
-  //cout << "-- in l\n";
+
   cout << "in L token.chars = " << tk.chars << endl;
   if (tk.chars == "Flip") {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in L token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
     if (tk.ID == 1002) {
       tk = getNextToken(in);
+      cout << "in L token.chars = " << tk.chars << endl;
     }
     else {
       cout << "Error. L1 Exiting program.\n";
@@ -648,25 +667,30 @@ node_t* L(istream& in, Token& tk) {
 }
 
 node_t* W(istream& in, Token& tk) {
-  //cout << "-- in w\n";
+
   cout << "in W token.chars = " << tk.chars << endl;
   if (tk.ID == 1004) {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in W token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
 
     if (tk.chars == ".") {
       tk = getNextToken(in);
+      cout << "in W token.chars = " << tk.chars << endl;
     }
     else if (tk.chars == "+" || tk.chars == "%" || tk.chars == "&"){
       tk = getNextToken(in);
+      cout << "in W token.chars = " << tk.chars << "\ncalling V()\n";
       V(in, tk);
-      cout << "-- in w\n";
+      cout << "-- in w after v\n";
       tk = getNextToken(in);
+      cout << "in W token.chars = " << tk.chars << endl;
       if (tk.ID == 1004) {
         tk = getNextToken(in);
+        cout << "in W token.chars = " << tk.chars << endl;
       }
       else {
         cout << "Error. W1 Exiting program.\n";
@@ -683,12 +707,13 @@ node_t* W(istream& in, Token& tk) {
 }
 
 node_t* Z(istream& in, Token& tk) {
-  //cout << "-- in w\n";
+
   cout << "in Z token.chars = " << tk.chars << endl;
   if (tk.ID == 1002) {
     //node_t* p = getNode(A);
     //p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in Z token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
   }
@@ -696,6 +721,7 @@ node_t* Z(istream& in, Token& tk) {
     // node_t* p = getNode(A);
     // p->token1 = tk;
     tk = getNextToken(in);
+    cout << "in Z token.chars = " << tk.chars << endl;
     //p->child = S();
     //S(in, tk);
   }
