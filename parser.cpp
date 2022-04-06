@@ -53,15 +53,18 @@ node_t* S(istream& in, Token& tk){
     node_t t(tk);
     p->children.push_back(t);
     cout << "Node = " << p->label << endl;
-    // cout << "length = " << p->children.size() << endl;
-    // cout << "children = " << p->children << endl;
-    for (node_t s: p->children) cout << s.token.chars << " \n";
+    cout << t.token.chars << " \n";
 
     tk = getNextToken(in);
     //p->child = A();
     cout << "in S token.chars = " << tk.chars << endl;
     // check if valid identifier token
     if (tk.ID == 1002) {
+      node_t t(tk);
+      p->children.push_back(t);
+      cout << "Node = " << p->label << endl;
+      cout << "size = " << p->children.size() << endl;
+      cout << t.token.chars << " \n";
 
       tk = getNextToken(in);
       cout << "in S token.chars = " << tk.chars << endl;
