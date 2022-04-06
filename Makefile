@@ -14,11 +14,11 @@ main.o: main.cpp parser.h scanner.h token.h
 scanner.o: scanner.cpp scanner.h token.h
 	$(CC) $(CFLAGS) -c scanner.cpp
 
-parser.o: parser.cpp parser.h
+parser.o: parser.cpp parser.h preorder.h
 	$(CC) $(CFLAGS) -c parser.cpp
 
-buildtree.o: buildtree.cpp buildtree.h
-	$(CC) $(CFLAGS) -c buildtree.cpp
+preorder.o: preorder.cpp preorder.h
+	$(CC) $(CFLAGS) -c preorder.cpp
 
 clean:
 	rm *.o P1
