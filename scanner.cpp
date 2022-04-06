@@ -30,8 +30,8 @@ const int table[statesRow][tokensCol] = { {   1,    3,    4,    5,   -1,    6,  
 
 // pass 2 arguemnts - string and line number
 Token scanner(string& fileString, int lineN)  {
-  cout << "*** In scanner.cpp *** \n";
-  cout << "filestring = " << fileString << endl;
+  //cout << "*** In scanner.cpp *** \n";
+  //cout << "filestring = " << fileString << endl;
   Token temp;
 
   temp = FSDriver(fileString, lineN);
@@ -215,5 +215,4 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
     }
   }
   return token;
-
 }

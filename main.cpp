@@ -41,5 +41,3 @@ int main(int argc, char * argv[]) {
   cout << "End of program.\n";
   return 0;
 }
-
-// scan file for content

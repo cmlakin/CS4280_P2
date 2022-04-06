@@ -3,7 +3,7 @@
 CC = g++
 CFLAGS = -g -Wall -std=c++11
 OBJS = main.o parser.o scanner.o
-TARGET = P1
+
 
 parser: $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o parser
