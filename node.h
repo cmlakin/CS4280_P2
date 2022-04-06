@@ -22,12 +22,19 @@ struct node_t {
 
   // token constructor
   node_t(Token tk) {
-    this->token = tk;
-    this->label = '\0';
+    token = tk;
+    //this->label = '\0';
   }
 
   // copy constructor
-  node_t(const node_t& rhs) { }
+  node_t(const node_t& rhs) {
+    this->token.chars = rhs.token.chars;
+    this->token.ID = rhs.token.ID;
+    this->level = rhs.level;
+  }
+
+  // copy constructor
+  //node_t(const node_t& rhs) { }
 
 }; // end of struct node_t
 

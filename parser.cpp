@@ -52,8 +52,12 @@ node_t* S(istream& in, Token& tk){
   if (tk.chars == "Name") {
     node_t t(tk);
     p->children.push_back(t);
-    cout << "Node = " << p->label << endl;
-    cout << t.token.chars << " \n";
+    // cout << "Node = " << p->label << endl;
+    //
+    // for (node_t t : p->children) {
+    //   cout << "child chars " << t.token.chars  << endl;
+    // }
+    // exit(-1);
 
     tk = getNextToken(in);
     //p->child = A();
@@ -62,18 +66,34 @@ node_t* S(istream& in, Token& tk){
     if (tk.ID == 1002) {
       node_t t(tk);
       p->children.push_back(t);
-      cout << "Node = " << p->label << endl;
-      cout << "size = " << p->children.size() << endl;
-      cout << t.token.chars << " \n";
+      // cout << "Node = " << p->label << endl;
+      // for (node_t t : p->children) {
+      //   cout << "child chars " << t.token.chars  << endl;
+      // }
+      // exit(-1);
 
       tk = getNextToken(in);
       cout << "in S token.chars = " << tk.chars << endl;
       // check for specific keyword token
       if (tk.chars == "Spot") {
+        node_t t(tk);
+        p->children.push_back(t);
+        // cout << "Node = " << p->label << endl;
+        // for (node_t t : p->children) {
+        //   cout << "child chars " << t.token.chars  << endl;
+        // }
+        // exit(-1);
         tk = getNextToken(in);
         cout << "in S token.chars = " << tk.chars << endl;
         // check if valid identifier token
         if (tk.ID == 1002) {
+          node_t t(tk);
+          p->children.push_back(t);
+          // cout << "Node = " << p->label << endl;
+          // for (node_t t : p->children) {
+          //   cout << "child chars " << t.token.chars  << endl;
+          // }
+          // exit(-1);
           tk = getNextToken(in);
           cout << "calling R\n";
           p->children.push_back(t);
@@ -113,8 +133,14 @@ node_t* R(istream& in, Token& tk) {
   node_t* p= new node_t('R');
   cout << "in R token.chars = " << tk.chars << endl;
   if (tk.chars == "Place") {
-    // node_t* p= getNode(A); // now we need node ???
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
+    cout << "Node = " << p->label << endl;
+    for (node_t t : p->children) {
+      cout << "child chars " << t.token.chars  << endl;
+    }
+    exit(-1);
+
     tk = getNextToken(in);
     //p->child = S();
     cout << "calling A\n";
