@@ -2,13 +2,15 @@
 #define NODE_h
 
 #include <list>
+//#include "token.h"
+struct Token;
 
 using std::list;
 using std::string;
 
 struct node_t {
   char value; // last character of word
-  list<string> words; // list of words each node holds
+  list<Token> tokens; // list of words each node holds
   int level;
   node_t* left;
   node_t* right;

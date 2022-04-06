@@ -17,5 +17,8 @@ scanner.o: scanner.cpp scanner.h token.h
 parser.o: parser.cpp parser.h
 	$(CC) $(CFLAGS) -c parser.cpp
 
+buildtree.o: buildtree.cpp buildtree.h
+	$(CC) $(CFLAGS) -c buildtree.cpp
+
 clean:
 	rm *.o P1

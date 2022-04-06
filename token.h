@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "node.h"
 
 using namespace std;
 // enum is going to return a value
@@ -14,6 +15,7 @@ extern string tokenNames[];
 
 
 struct Token {
+  node_t* node; // if null then not a token
   int ID;  // type of token
   string chars;   // characters in token
   int line;      // line number

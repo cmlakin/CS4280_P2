@@ -3,6 +3,7 @@
 #include "scanner.h"
 #include "node.h"
 #include "token.h"
+#include "buildtree.h"
 #include "parser.h"
 
 using namespace std;
@@ -20,17 +21,8 @@ node_t * parser(istream& in) {
   }
 
   tk = getNextToken(in);
-  // cout << "tk.ID = " << tk.ID << endl;
-  // cout << "tk.line = " << tk.line << endl;
-  // cout << "tk.chars = " << tk.chars << endl;
-  // if (tk.ID == EOFtk){
-  //   continue;
-  // }
-  // else {
-  //   cout << "Error. Exiting program.\n";
-  // }
 
-  root = S(in, tk);
+  root->tokens.push_back(S(in, tk));
   //cout << "end of parser\n";
   return root;
 }
@@ -51,16 +43,22 @@ Token getNextToken(istream& in) {
 
 //individual functions written out.
 node_t* S(istream& in, Token& tk){
-  //cout << "-- in s\n";
+
+  node_t* p = new node_t('S');
   cout << "in S token.chars = " << tk.chars << endl;
-  //node_t* p = getNode(S);
+
   if (tk.chars == "Name") {
-    //p->token1 = tk;
+    p->tokens.push_back(tk);
+    cout << "Token = " << p->value << endl;
+    for (Token s: p->tokens) cout << s.chars << " \n";
+    exit(-1);
     tk = getNextToken(in);
+    tk.node = NULL;
     //p->child = A();
     cout << "in S token.chars = " << tk.chars << endl;
     // check if valid identifier token
     if (tk.ID == 1002) {
+
       tk = getNextToken(in);
       cout << "in S token.chars = " << tk.chars << endl;
       // check for specific keyword token
@@ -99,6 +97,8 @@ node_t* S(istream& in, Token& tk){
     cout << "Error. S4 Exiting program.\n";
     exit(-1);
   }
+
+  return p;
 }
 // need help with this one
 node_t* R(istream& in, Token& tk) {
@@ -108,7 +108,7 @@ node_t* R(istream& in, Token& tk) {
     // node_t* p = getNode(A); // now we need node ???
     // p->token1 = tk;
     tk = getNextToken(in);
-    //p->child = S();
+    p->child = S();
     cout << "calling A\n";
     A(in, tk);
     cout << "-- in r after  a\n";

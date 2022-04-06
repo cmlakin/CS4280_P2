@@ -13,7 +13,7 @@ node_t* getRoot() {
   return root;
 }
 
-void insert(char value, const string& uWord) {
+void insert(char value, Token& token) {
 
   node_t* child = new node_t(value); // create new node_t which will be inserted
 
