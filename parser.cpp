@@ -93,7 +93,7 @@ node_t* S(istream& in, Token& tk){
     //return p;  // explicit return
   }
   else {
-
+    cout << "Error. S4 Exiting program.\n";
     //return error();  // explicit return
   }
 }
