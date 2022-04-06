@@ -5,6 +5,7 @@
 #include "token.h"
 using namespace std;
 
+node_t* getRoot();
 node_t * parser(istream&);
 Token getNextToken(istream&);
 

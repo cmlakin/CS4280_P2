@@ -7,17 +7,14 @@
 
 using namespace std;
 
-void preOrder(node_t* p, ofstream& out) {
+void preOrder(node_t* p) {
   if (p == nullptr) {
     return;
   } else {
     for(int i = 0; i < p->level; i++) {
-      out << "  ";
+      cout << "  ";
     }
-    out << p->level << " " << p->value << " ";
-    for (string s: p->words) out << s << " ";
-    out << endl;
-    preOrder(p->left, out);
-    preOrder(p->right, out);
+    cout << p->level << " " << p->label << " ";
+    for (string s: p->token.chars) cout << s << endl;
   }
 }

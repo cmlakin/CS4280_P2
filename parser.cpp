@@ -3,19 +3,24 @@
 #include "scanner.h"
 #include "node.h"
 #include "token.h"
-#include "buildtree.h"
+#include "preorder.h"
 #include "parser.h"
 
 using namespace std;
 
 string fileLine;
 int lineNum = 0;
+node_t* root = nullptr;
+
+node_t* getRoot() {
+  return root;
+}
 
 node_t * parser(istream& in) {
   Token tk;
   Token tkS;
 
-  node_t* root;
+  //node_t* root;
   //cout << "in parser\n";
   if (in.eof()) {
     cout << "Error: Empty file, no content.\n";
@@ -135,10 +140,11 @@ node_t* R(istream& in, Token& tk) {
   if (tk.chars == "Place") {
     node_t t(tk);
     p->children.push_back(t);
-    cout << "Node = " << p->label << endl;
-    for (node_t t : p->children) {
-      cout << "child chars " << t.token.chars  << endl;
-    }
+    // cout << "Node = " << p->label << endl;
+    // for (node_t t : p->children) {
+    //   cout << "child chars " << t.token.chars  << endl;
+    // }
+    preOrder(getRoot());
     exit(-1);
 
     tk = getNextToken(in);

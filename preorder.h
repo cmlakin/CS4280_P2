@@ -5,9 +5,6 @@
 
 using std::ofstream;
 
-void preOrder(node_t*, ofstream&);
-
-int height(node_t*);
-//node_t* newnode_t(int);
+void preOrder(node_t*);
 
 #endif
