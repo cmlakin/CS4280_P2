@@ -15,6 +15,6 @@ void preOrder(node_t* p) {
       cout << "  ";
     }
     cout << p->level << " " << p->label << " ";
-    for (string s: p->token.chars) cout << s << endl;
+    for (node_t s: p->children) cout << s.token.chars << endl;
   }
 }

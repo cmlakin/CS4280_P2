@@ -2,7 +2,7 @@
 
 CC = g++
 CFLAGS = -g -Wall -std=c++11
-OBJS = main.o parser.o scanner.o
+OBJS = main.o parser.o scanner.o preorder.o
 
 
 parser: $(OBJS)
