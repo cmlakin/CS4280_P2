@@ -28,6 +28,8 @@ struct node_t {
 
   // copy constructor
   node_t(const node_t& rhs) {
+    this->label  = rhs.label;
+    this->children = rhs.children;
     this->token.chars = rhs.token.chars;
     this->token.ID = rhs.token.ID;
     this->level = rhs.level;

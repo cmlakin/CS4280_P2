@@ -16,7 +16,13 @@ void preOrder(node_t* p) {
     }
     cout << p->level << " " << p->label << endl;
     for (node_t s: p->children) {
-      cout << "  " << s.token.chars << endl;
+      if (s.children.size() == 0) {
+        cout << "  " << s.token.chars << endl;
+      }
+      else {
+        cout << s.label <<  endl;
+        preOrder(&s);
+      }
     }
   }
 }
