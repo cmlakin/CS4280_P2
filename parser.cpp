@@ -10,6 +10,7 @@ using namespace std;
 
 string fileLine;
 int lineNum = 0;
+int levelNum = 0;
 node_t* root = nullptr;
 
 node_t* getRoot() {
@@ -30,6 +31,7 @@ node_t * parser(istream& in) {
   tk = getNextToken(in);
 
   root = S(in, tk);
+  preOrder(getRoot());
   //cout << "end of parser\n";
   return root;
 }
@@ -101,13 +103,13 @@ node_t* S(istream& in, Token& tk){
           // exit(-1);
           tk = getNextToken(in);
           cout << "calling R\n";
-          p->children.push_back(t);
+          p->children.push_back('R');
           R(in, tk);
           cout << "-- in s after r\n";
           //tk = getNextToken(in);
-          cout << "calling E\n";
-          E(in, tk);
-          cout << "-- in s after e\n";
+          // cout << "calling E\n";
+          // E(in, tk);
+          // cout << "-- in s after e\n";
         }
         else {
           cout << "Error. S1 Exiting program.\n";
@@ -135,32 +137,33 @@ node_t* S(istream& in, Token& tk){
 }
 // need help with this one
 node_t* R(istream& in, Token& tk) {
-  node_t* p= new node_t('R');
+  node_t* p = new node_t('R');
   cout << "in R token.chars = " << tk.chars << endl;
   if (tk.chars == "Place") {
     node_t t(tk);
     p->children.push_back(t);
+    p->level = ++levelNum;
     // cout << "Node = " << p->label << endl;
     // for (node_t t : p->children) {
     //   cout << "child chars " << t.token.chars  << endl;
     // }
-    preOrder(getRoot());
-    exit(-1);
+
+    // exit(-1);
 
     tk = getNextToken(in);
     //p->child = S();
-    cout << "calling A\n";
-    A(in, tk);
-    cout << "-- in r after  a\n";
-    cout << "calling B\n";
-    B(in, tk);
-    cout << "-- in r after b\n";
-    cout << "in R token.chars = " << tk.chars << endl;
-    if (tk.chars == "Home"){
-      tk = getNextToken(in);
-      cout << "in R token.chars = " << tk.chars << endl;
-      //done
-    }
+    // cout << "calling A\n";
+    // A(in, tk);
+    // cout << "-- in r after  a\n";
+    // cout << "calling B\n";
+    // B(in, tk);
+    // cout << "-- in r after b\n";
+    // cout << "in R token.chars = " << tk.chars << endl;
+    // if (tk.chars == "Home"){
+    //   tk = getNextToken(in);
+    //   cout << "in R token.chars = " << tk.chars << endl;
+    //   //done
+    // }
   }
   else {
     cout << "Error. R1 Exiting program.\n";
