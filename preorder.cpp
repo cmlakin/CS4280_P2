@@ -11,13 +11,13 @@ void preOrder(node_t* p) {
   if (p == nullptr) {
     return;
   } else {
-    // this should generate the left hand side spaces
-    // for(int i = 0; i < p->level; i++) {
-    //   cout << "  ";
-    // }
+    // temp will be used to format spacing of levels
+    int temp;
+    temp = p->level + 1;
     cout << p->label << endl;
     for (node_t s: p->children) {
-      for(int i = 0; i < p->level; i++) {
+
+      for(int i = 0; i < temp; i++) {
         cout << "  ";
       }
       if (s.children.size() == 0) {
