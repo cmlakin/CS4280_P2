@@ -55,7 +55,7 @@ node_t* S(istream& in, Token& tk){
 
   node_t* p= new node_t('S');
   cout << "in S token.chars = " << tk.chars << endl;
-
+  p->level = levelNum;
   if (tk.chars == "Name") {
     node_t t(tk);
     p->children.push_back(t);
@@ -103,8 +103,9 @@ node_t* S(istream& in, Token& tk){
           // exit(-1);
           tk = getNextToken(in);
           cout << "calling R\n";
-          p->children.push_back('R');
-          R(in, tk);
+
+          node_t* foo =  R(in, tk);
+          p->children.push_back(*foo);
           cout << "-- in s after r\n";
           //tk = getNextToken(in);
           // cout << "calling E\n";
@@ -138,11 +139,11 @@ node_t* S(istream& in, Token& tk){
 // need help with this one
 node_t* R(istream& in, Token& tk) {
   node_t* p = new node_t('R');
+  p->level = ++levelNum;
   cout << "in R token.chars = " << tk.chars << endl;
   if (tk.chars == "Place") {
     node_t t(tk);
     p->children.push_back(t);
-    p->level = ++levelNum;
     // cout << "Node = " << p->label << endl;
     // for (node_t t : p->children) {
     //   cout << "child chars " << t.token.chars  << endl;
@@ -573,6 +574,7 @@ node_t* T(istream& in, Token& tk) {
     cout << "Error. T Exiting program.\n";
     exit(-1);
   }
+  return p;
 }
 
 node_t* V(istream& in, Token& tk) {
@@ -762,6 +764,7 @@ node_t* L(istream& in, Token& tk) {
     cout << "Error. L2 Exiting program.\n";
     exit(-1);
   }
+  return p;
 }
 
 node_t* W(istream& in, Token& tk) {
