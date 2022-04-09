@@ -21,4 +21,4 @@ preorder.o: preorder.cpp preorder.h
 	$(CC) $(CFLAGS) -c preorder.cpp
 
 clean:
-	rm *.o P1
+	rm *.o parser

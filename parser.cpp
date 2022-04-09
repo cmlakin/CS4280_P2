@@ -157,6 +157,8 @@ node_t* R(istream& in, Token& tk) {
     cout << "-- in r after b\n";
     cout << "in R token.chars = " << tk.chars << endl;
     if (tk.chars == "Home"){
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
       cout << "in R token.chars = " << tk.chars << endl;
       //done
@@ -260,8 +262,8 @@ node_t* B(istream& in, Token& tk) {
     }
   }
   else if (tk.chars == "/") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling D /\n";
     node_t* foo = D(in, tk);
     p->children.push_back(*foo);
@@ -269,8 +271,8 @@ node_t* B(istream& in, Token& tk) {
     cout << "in B token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Assign") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling D Assign\n";
     node_t* foo = D(in, tk);
     p->children.push_back(*foo);
@@ -279,8 +281,8 @@ node_t* B(istream& in, Token& tk) {
 
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling D Spot/Move\n";
     node_t* foo = D(in, tk);
     p->children.push_back(*foo);
@@ -289,8 +291,8 @@ node_t* B(istream& in, Token& tk) {
 
   }
   else if (tk.chars == "Flip") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling D Flip\n";
     node_t* foo = D(in, tk);
     p->children.push_back(*foo);
@@ -299,16 +301,16 @@ node_t* B(istream& in, Token& tk) {
 
   }
   else if (tk.chars == "Show") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling D Show\n";
     node_t* foo = D(in, tk);
     p->children.push_back(*foo);
     cout << "-- in b after D Show\n";
   }
   else if (tk.chars == "{") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling D {\n";
     node_t* foo = D(in, tk);
     p->children.push_back(*foo);
@@ -329,8 +331,8 @@ node_t* C(istream& in, Token& tk) {
   p->level = ++levelNum;
   cout << "in C token.chars = " << tk.chars << endl;
   if (tk.chars == "{") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling F\n";
     node_t* foo = F(in, tk);
     p->children.push_back(*foo);
@@ -339,8 +341,8 @@ node_t* C(istream& in, Token& tk) {
 
   }
   else if (tk.chars == "Here") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling G\n";
     node_t* foo = G(in, tk);
     p->children.push_back(*foo);
@@ -361,8 +363,8 @@ node_t* D(istream& in, Token& tk) {
   p->level = ++levelNum;
   cout << "in D token.chars = " << tk.chars << endl;
   if (tk.chars == "/") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling H\n";
     node_t* foo = H(in, tk);
     p->children.push_back(*foo);
@@ -370,8 +372,8 @@ node_t* D(istream& in, Token& tk) {
     cout << "in D after H token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Assign") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling J\n";
     node_t* foo = J(in, tk);
     p->children.push_back(*foo);
@@ -380,8 +382,8 @@ node_t* D(istream& in, Token& tk) {
 
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling K\n";
     node_t* foo = K(in, tk);
     p->children.push_back(*foo);
@@ -389,8 +391,8 @@ node_t* D(istream& in, Token& tk) {
     cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Flip") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling L\n";
     node_t* foo = L(in, tk);
     p->children.push_back(*foo);
@@ -398,8 +400,8 @@ node_t* D(istream& in, Token& tk) {
     cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Show") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling E\n";
     node_t* foo = E(in, tk);
     p->children.push_back(*foo);
@@ -407,8 +409,8 @@ node_t* D(istream& in, Token& tk) {
     cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "{") {
-    node_t t(tk);
-    p->children.push_back(t);
+    // node_t t(tk);
+    // p->children.push_back(t);
     cout << "calling F\n";
     node_t* foo = F(in, tk);
     p->children.push_back(*foo);
@@ -428,6 +430,8 @@ node_t* F(istream& in, Token& tk) {
   p->level = ++levelNum;
   cout << "in F token.chars = " << tk.chars << endl;
   if (tk.chars == "{") {
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
     cout << "in F token.chars = " << tk.chars << endl;
     if (tk.chars == "If") {
@@ -489,7 +493,6 @@ node_t* F(istream& in, Token& tk) {
         foo = W(in, tk);
         p->children.push_back(*foo);
         cout << "-- in f after w\n";
-        tk = getNextToken(in);
         cout << "in F token.chars = " << tk.chars << endl;
 
         if (tk.chars == "}") {
