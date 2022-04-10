@@ -1,3 +1,5 @@
+#ifndef PARSER_h
+#define PARSER_h
 
 #include <iostream>
 #include <fstream>
@@ -5,6 +7,7 @@
 #include "token.h"
 using namespace std;
 
+node_t* getRoot();
 node_t * parser(istream&);
 Token getNextToken(istream&);
 
@@ -25,3 +28,5 @@ node_t* K(istream&, Token&);
 node_t* L(istream&, Token&);
 node_t* W(istream&, Token&);
 node_t* Z(istream&, Token&);
+
+# endif

@@ -3,35 +3,31 @@
 #include "scanner.h"
 #include "node.h"
 #include "token.h"
+#include "treeprint.h"
 #include "parser.h"
 
 using namespace std;
 
 string fileLine;
 int lineNum = 0;
+int levelNum = 0;
+node_t* root = nullptr;
+
+node_t* getRoot() {
+  return root;
+}
 
 node_t * parser(istream& in) {
   Token tk;
-  node_t* root;
-  //cout << "in parser\n";
+
   if (in.eof()) {
     cout << "Error: Empty file, no content.\n";
     cout << "Exiting program.\n";
   }
 
   tk = getNextToken(in);
-  // cout << "tk.ID = " << tk.ID << endl;
-  // cout << "tk.line = " << tk.line << endl;
-  // cout << "tk.chars = " << tk.chars << endl;
-  // if (tk.ID == EOFtk){
-  //   continue;
-  // }
-  // else {
-  //   cout << "Error. Exiting program.\n";
-  // }
-
   root = S(in, tk);
-  //cout << "end of parser\n";
+
   return root;
 }
 
@@ -51,729 +47,753 @@ Token getNextToken(istream& in) {
 
 //individual functions written out.
 node_t* S(istream& in, Token& tk){
-  //cout << "-- in s\n";
-  cout << "in S token.chars = " << tk.chars << endl;
-  //node_t* p = getNode(S);
+  node_t* p= new node_t('S');
+  // cout << "in S token.chars = " << tk.chars << endl;
+  p->level = levelNum;
   if (tk.chars == "Name") {
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    //p->child = A();
-    cout << "in S token.chars = " << tk.chars << endl;
+    // cout << "in S token.chars = " << tk.chars << endl;
     // check if valid identifier token
     if (tk.ID == 1002) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in S token.chars = " << tk.chars << endl;
+      // cout << "in S token.chars = " << tk.chars << endl;
       // check for specific keyword token
       if (tk.chars == "Spot") {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in S token.chars = " << tk.chars << endl;
+        // cout << "in S token.chars = " << tk.chars << endl;
         // check if valid identifier token
         if (tk.ID == 1002) {
+          node_t t(tk);
+          p->children.push_back(t);
           tk = getNextToken(in);
-          cout << "calling R\n";
-          R(in, tk);
-          cout << "-- in s after r\n";
-          //tk = getNextToken(in);
-          cout << "calling E\n";
-          E(in, tk);
-          cout << "-- in s after e\n";
+          // cout << "calling R\n";
+
+          node_t* foo = R(in, tk);
+          p->children.push_back(*foo);
+          // cout << "-- in s after r\n";
+          // cout << "calling E\n";
+          foo = E(in, tk);
+          p->children.push_back(*foo);
+          // cout << "-- in s after e\n";
         }
         else {
-          cout << "Error. S1 Exiting program.\n";
+          cout << "Error. Invalid entry in S(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. S2 Exiting program.\n";
+        cout << "Error. Invalid entry in S(), exiting program.\n";
         exit(-1);
       }
     }
     else {
-      cout << "Error. S3 Exiting program.\n";
+      cout << "Error. Invalid entry in S(), exiting program.\n";
       exit(-1);
     }
-
-    //return p;  // explicit return
   }
   else {
-    cout << "Error. S4 Exiting program.\n";
+    cout << "Error. Invalid entry in S(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
-// need help with this one
+
 node_t* R(istream& in, Token& tk) {
-  //cout << "-- in r\n";
-  cout << "in R token.chars = " << tk.chars << endl;
+  node_t* p = new node_t('R');
+  p->level = ++levelNum;
+  // cout << "in R token.chars = " << tk.chars << endl;
   if (tk.chars == "Place") {
-    // node_t* p = getNode(A); // now we need node ???
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    //p->child = S();
-    cout << "calling A\n";
-    A(in, tk);
-    cout << "-- in r after  a\n";
-    cout << "calling B\n";
-    B(in, tk);
-    cout << "-- in r after b\n";
-    cout << "in R token.chars = " << tk.chars << endl;
+    // cout << "calling A\n";
+    node_t* foo = A(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in r after  a\n";
+    // cout << "calling B\n";
+    node_t* foo1 = B(in, tk);
+    p->children.push_back(*foo1);
+    // cout << "-- in r after b\n";
+    // cout << "in R token.chars = " << tk.chars << endl;
     if (tk.chars == "Home"){
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in R token.chars = " << tk.chars << endl;
-      //done
+      // cout << "in R token.chars = " << tk.chars << endl;
     }
   }
   else {
-    cout << "Error. R1 Exiting program.\n";
+    cout << "Error. Invalid entry in R(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* E(istream& in, Token& tk) {
-  //cout << "-- in e\n";
-  cout << "in E token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('E');
+  p->level = ++levelNum;
+  // cout << "in E token.chars = " << tk.chars << endl;
   if (tk.chars == "Show") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    //p->child = S();
-    //S(in, tk);
 
-    cout << "in E token.chars = " << tk.chars << endl;
+    // cout << "in E token.chars = " << tk.chars << endl;
     if (tk.ID == 1002) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in E token.chars = " << tk.chars << endl;
-      //done
+      // cout << "in E token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. E1 Exiting program.\n";
+      cout << "Error. Invalid entry in E(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. E2 Exiting program.\n";
+    cout << "Error. Invalid entry in E(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* A(istream& in, Token& tk) {
-
-  cout << "in A token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('A');
+  p->level = ++levelNum;
+  // cout << "in A token.chars = " << tk.chars << endl;
 
   if (tk.chars == "Name") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in A token.chars = " << tk.chars << endl;
-    //p->child = S();
-    // S(in, tk);
+    // cout << "in A token.chars = " << tk.chars << endl;
 
     if (tk.ID == 1002) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in A token.chars = " << tk.chars << endl;
+      // cout << "in A token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. A1 Exiting program.\n";
+      cout << "Error. Invalid entry in A(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. A2 Exiting program.\n";
+    cout << "Error. Invalid entry in A(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* B(istream& in, Token& tk) {
-
+  node_t* p= new node_t('B');
+  p->level = ++levelNum;
   if (tk.chars == ".") {
-    cout << "in B token.chars = " << tk.chars << endl;
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
+    // cout << "in B token.chars = " << tk.chars << endl;
     tk = getNextToken(in);
-    //p->child = S();
-    //S(in, tk);
-    cout << "in B token.chars = " << tk.chars << "\n calling C\n";
-    C(in, tk);
-    cout << "-- in b  after <C>\n";
-    cout << "in B token.chars = " << tk.chars << endl;
+    // cout << "in B token.chars = " << tk.chars << "\n calling C\n";
+    node_t* foo = C(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b  after <C>\n";
+    // cout << "in B token.chars = " << tk.chars << endl;
     if (tk.chars == ".") {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in B token.chars = " << tk.chars << "\n calling B\n";
-      B(in, tk);
-      cout << "-- in b after .<B>\n";
-      cout << "in B token.chars = " << tk.chars << "\n calling B\n";
-      //done
+      // cout << "in B token.chars = " << tk.chars << "\n calling B\n";
+      node_t* foo = B(in, tk);
+      p->children.push_back(*foo);
+      // cout << "-- in b after .<B>\n";
+      // cout << "in B token.chars = " << tk.chars << "\n calling B\n";
     }
     else {
-      cout << "Error. B1 Exiting program.\n";
+      cout << "Error. Invalid entry in B(), exiting program.\n";
       exit(-1);
     }
   }
   else if (tk.chars == "/") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling D /\n";
-    D(in, tk);
-    cout << "-- in b after D /\n";
-    cout << "in B token.chars = " << tk.chars << endl;
+    // cout << "calling D /\n";
+    node_t* foo = D(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b after D /\n";
+    // cout << "in B token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Assign") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling D Assign\n";
-    D(in, tk);
-    cout << "-- in b after D Assign\n";
-    cout << "in B token.chars = " << tk.chars << endl;
+    // cout << "calling D Assign\n";
+    node_t* foo = D(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b after D Assign\n";
+    // cout << "in B token.chars = " << tk.chars << endl;
 
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling D Spot/Move\n";
-    D(in, tk);
-    cout << "-- in b after D Spot/Move\n";
-    cout << "in B token.chars = " << tk.chars << endl;
+    // cout << "calling D Spot/Move\n";
+    node_t* foo = D(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b after D Spot/Move\n";
+    // cout << "in B token.chars = " << tk.chars << endl;
 
   }
   else if (tk.chars == "Flip") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling D Flip\n";
-    D(in, tk);
-    cout << "-- in b after D Flip\n";
-    //tk = getNextToken(in);
-    cout << "in B token.chars = " << tk.chars << endl;
+    // cout << "calling D Flip\n";
+    node_t* foo = D(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b after D Flip\n";
+    // cout << "in B token.chars = " << tk.chars << endl;
 
   }
   else if (tk.chars == "Show") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling D Show\n";
-    D(in, tk);
-    cout << "-- in b after D Show\n";
-    //tk = getNextToken(in);
+    // cout << "calling D Show\n";
+    node_t* foo = D(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b after D Show\n";
   }
   else if (tk.chars == "{") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling D {\n";
-    D(in, tk);
-    cout << "-- in b after D {\n";
-    //tk = getNextToken(in);
+    // cout << "calling D {\n";
+    node_t* foo = D(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in b after D {\n";
   }
   else {  // predicts B->(epslon)
-    //return NULL;
+    // I need to print empty in here for tk.chars
+    Token temp = tk;
+    temp.chars = "Empty";
+    node_t t(temp);
+    p->children.push_back(t);
+
   }
+  --levelNum;
+  return p;
 }
 
 node_t* C(istream& in, Token& tk) {
-  //cout << "-- in c\n";
-  cout << "in C token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('C');
+  p->level = ++levelNum;
+  // cout << "in C token.chars = " << tk.chars << endl;
   if (tk.chars == "{") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling F\n";
-    F(in, tk);
-    cout << "-- in c after f\n";
-    cout << "in C token.chars = " << tk.chars << endl;
+    // cout << "calling F\n";
+    node_t* foo = F(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in c after f\n";
+    // cout << "in C token.chars = " << tk.chars << endl;
 
   }
   else if (tk.chars == "Here") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling G\n";
-    G(in, tk);
-    cout << "-- in c after g\n";
-    cout << "in C token.chars = " << tk.chars << endl;
+    // cout << "calling G\n";
+    node_t* foo = G(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in c after g\n";
+    // cout << "in C token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. C Exiting program.\n";
+    cout << "Error. Invalid entry in C(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 
 node_t* D(istream& in, Token& tk) {
-
-  cout << "in D token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('D');
+  p->level = ++levelNum;
+  // cout << "in D token.chars = " << tk.chars << endl;
   if (tk.chars == "/") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling H\n";
-    H(in, tk);
-    cout << "-- in d after H\n";
-    cout << "in D after H token.chars = " << tk.chars << endl;
+    // cout << "calling H\n";
+    node_t* foo = H(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in d after H\n";
+    // cout << "in D after H token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Assign") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling J\n";
-    J(in, tk);
-    cout << "-- in d after j\n";
-    cout << "in D after J token.chars = " << tk.chars << endl;
+    // cout << "calling J\n";
+    node_t* foo = J(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in d after j\n";
+    // cout << "in D after J token.chars = " << tk.chars << endl;
 
   }
   else if (tk.chars == "Spot" || tk.chars == "Move") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling K\n";
-    K(in, tk);
-    cout << "-- in d after k\n";
-    cout << "in D token.chars = " << tk.chars << endl;
+    // cout << "calling K\n";
+    node_t* foo = K(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in d after k\n";
+    // cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Flip") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling L\n";
-    L(in, tk);
-    cout << "-- in d after l\n";
-    cout << "in D token.chars = " << tk.chars << endl;
+    // cout << "calling L\n";
+    node_t* foo = L(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in d after l\n";
+    // cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "Show") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //tk = getNextToken(in);
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling E\n";
-    E(in, tk);
-    cout << "-- in d after e\n";
-    cout << "in D token.chars = " << tk.chars << endl;
+    // cout << "calling E\n";
+    node_t* foo = E(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in d after e\n";
+    // cout << "in D token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "{") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
-    //tk = getNextToken(in);
-    //p->child = S();
-    //S(in, tk);
-    cout << "calling F\n";
-    F(in, tk);
-    cout << "-- in d after f\n";
-    cout << "in D token.chars = " << tk.chars << endl;
+    // cout << "calling F\n";
+    node_t* foo = F(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in d after f\n";
+    // cout << "in D token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. D Exiting program.\n";
+    cout << "Error. Invalid entry in D(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* F(istream& in, Token& tk) {
-
-  cout << "in F token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('F');
+  p->level = ++levelNum;
+  // cout << "in F token.chars = " << tk.chars << endl;
   if (tk.chars == "{") {
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in F token.chars = " << tk.chars << endl;
+    // cout << "in F token.chars = " << tk.chars << endl;
     if (tk.chars == "If") {
-      // node_t* p = getNode(A);
-      // p->token1 = tk;
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in F token.chars = " << tk.chars << endl;
-      //p->child = S();
-      //S(in, tk);
+      // cout << "in F token.chars = " << tk.chars << endl;
 
       if (tk.ID == 1002) {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in F token.chars = " << tk.chars << "\n calling T\n";
-        T(in, tk);
-        cout << "-- in f after t\n calling W\n";
-        W(in, tk);
-        cout << "-- in f after w\ncalling D\n";
-        D(in, tk);
-        cout << "-- in f after d\n";
-        cout << "in F token.chars = " << tk.chars << endl;
+        // cout << "in F token.chars = " << tk.chars << "\n calling T\n";
+        node_t* foo = T(in, tk);
+        p->children.push_back(*foo);
+        // cout << "-- in f after t\n calling W\n";
+        foo = W(in, tk);
+        p->children.push_back(*foo);
+        // cout << "-- in f after w\ncalling D\n";
+        foo = D(in, tk);
+        p->children.push_back(*foo);
+        // cout << "-- in f after d\n";
+        // cout << "in F token.chars = " << tk.chars << endl;
 
         if (tk.chars == "}") {
+          node_t t(tk);
+          p->children.push_back(t);
           tk = getNextToken(in);
-          cout << "in F token.chars = " << tk.chars << endl;
-          //done
+          //cout << "in F token.chars = " << tk.chars << endl;
         }
         else {
-          cout << "Error. F1 Exiting program.\n";
+          cout << "Error. Invalid entry in F(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. F2 Exiting program.\n";
+        cout << "Error. Invalid entry in F(), exiting program.\n";
         exit(-1);
       }
     }
     else if (tk.chars  == "Do") {
-      // node_t* p = getNode(A);
-      // p->token1 = tk;
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in F token.chars = " << tk.chars << endl;
-      // p->child = S();
-      //S(in, tk);
+      // cout << "in F token.chars = " << tk.chars << endl;
 
       if (tk.chars == "Again") {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in F token.chars = " << tk.chars << "\ncalling D\n";
-        D(in, tk);
-        cout << "-- in f after d\ncalling T\n";
-        T(in, tk);
-        cout << "-- in f after t\ncalling W\n";
-        W(in, tk);
-        cout << "-- in f after w\n";
-        tk = getNextToken(in);
-        cout << "in F token.chars = " << tk.chars << endl;
+        // cout << "in F token.chars = " << tk.chars << "\ncalling D\n";
+        node_t* foo = D(in, tk);
+        p->children.push_back(*foo);
+        // cout << "-- in f after d\ncalling T\n";
+        foo = T(in, tk);
+        p->children.push_back(*foo);
+        // cout << "-- in f after t\ncalling W\n";
+        foo = W(in, tk);
+        p->children.push_back(*foo);
+        // cout << "-- in f after w\n";
+        // cout << "in F token.chars = " << tk.chars << endl;
 
         if (tk.chars == "}") {
+          node_t t(tk);
+          p->children.push_back(t);
           tk = getNextToken(in);
-          cout << "in F token.chars = " << tk.chars << endl;
-          //done
+          // cout << "in F token.chars = " << tk.chars << endl;
         }
         else {
-          cout << "Error. F3 Exiting program.\n";
+          cout << "Error. Invalid entry in F(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. F2 Exiting program.\n";
+        cout << "Error. Invalid entry in F(), exiting program.\n";
         exit(-1);
       }
     }
   }
   else {
-    cout << "Error. F Exiting program.\n";
+    cout << "Error. Invalid entry in F(), exiting program.\n";
     exit(-1);
   }
-
+  --levelNum;
+  return p;
 }
 
 node_t* G(istream& in, Token& tk) {
-
-  cout << "in G token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('G');
+  p->level = ++levelNum;
+  // cout << "in G token.chars = " << tk.chars << endl;
   if (tk.chars == "Here") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in G token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in G token.chars = " << tk.chars << endl;
 
     if (tk.ID == 1004) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in G token.chars = " << tk.chars << endl;
+      // cout << "in G token.chars = " << tk.chars << endl;
 
       if (tk.chars == "There") {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in G token.chars = " << tk.chars << endl;
+        // cout << "in G token.chars = " << tk.chars << endl;
       }
       else {
-        cout << "Error. G1 Exiting program.\n";
+        cout << "Error. Invalid entry in G(), exiting program.\n";
         exit(-1);
       }
     }
     else {
-      cout << "Error. G2 Exiting program.\n";
+      cout << "Error. Invalid entry in G(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. G3 Exiting program.\n";
+    cout << "Error. Invalid entry in G(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* T(istream& in, Token& tk) {
-
-  cout << "in T token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('T');
+  p->level = ++levelNum;
+  // cout << "in T token.chars = " << tk.chars << endl;
   if (tk.chars == "<<") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in T token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in T token.chars = " << tk.chars << endl;
 
   }
   else if (tk.chars == "<-") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in T token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
-
+    // cout << "in T token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. T Exiting program.\n";
+    cout << "Error. Invalid entry in T(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* V(istream& in, Token& tk) {
-
-  cout << "in V token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('V');
+  p->level = ++levelNum;
+  // cout << "in V token.chars = " << tk.chars << endl;
   if (tk.chars == "+") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in V token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in V token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "%") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in V token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in V token.chars = " << tk.chars << endl;
   }
   else if (tk.chars == "&") {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in V token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in V token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. V Exiting program.\n";
+    cout << "Error. Invalid entry in V(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* H(istream& in, Token& tk) {
-
-  cout << "in H token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('H');
+  p->level = ++levelNum;
+  // cout << "in H token.chars = " << tk.chars << endl;
   if (tk.chars == "/") {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in H token.chars = " << tk.chars << "\ncalling Z\n";
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in H token.chars = " << tk.chars << "\ncalling Z\n";
 
-    Z(in, tk);
-    cout << "-- in h after z\n";
-    cout << "in H token.chars = " << tk.chars << endl;
+    node_t* foo = Z(in, tk);
+    p->children.push_back(*foo);
+    // cout << "-- in h after z\n";
+    // cout << "in H token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. H Exiting program.\n";
+    cout << "Error. Invalid entry in H(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* J(istream& in, Token& tk) {
-
-  cout << "in J token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('J');
+  p->level = ++levelNum;
+  // cout << "in J token.chars = " << tk.chars << endl;
   if (tk.chars == "Assign") {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in J token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in J token.chars = " << tk.chars << endl;
 
     if (tk.ID == 1002) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in J token.chars = " << tk.chars << "\ncalling D()\n";
-      D(in, tk);
-      cout << "-- in j after D\n";
+      // cout << "in J token.chars = " << tk.chars << "\ncalling D()\n";
+      node_t* foo = D(in, tk);
+      p->children.push_back(*foo);
+      // cout << "-- in j after D\n";
       tk = getNextToken(in);
-      cout << "in J token.chars = " << tk.chars << endl;
+      // cout << "in J token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. J1 Exiting program.\n";
+      cout << "Error. Invalid entry in J(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. J2 Exiting program.\n";
+    cout << "Error. Invalid entry in J(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* K(istream& in, Token& tk) {
-
-  cout << "in K token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('K');
+  p->level = ++levelNum;
+  // cout << "in K token.chars = " << tk.chars << endl;
   if (tk.chars == "Spot") {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in K token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in K token.chars = " << tk.chars << endl;
 
     if (tk.ID == 1004) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in K token.chars = " << tk.chars << endl;
+      // cout << "in K token.chars = " << tk.chars << endl;
 
       if (tk.chars == "Show") {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in K token.chars = " << tk.chars << endl;
+        // cout << "in K token.chars = " << tk.chars << endl;
 
         if (tk.ID == 1004) {
+          node_t t(tk);
+          p->children.push_back(t);
           tk = getNextToken(in);
-          cout << "in K token.chars = " << tk.chars << endl;
+          // cout << "in K token.chars = " << tk.chars << endl;
         }
         else {
-          cout << "Error. K1 Exiting program.\n";
+          cout << "Error. Invalid entry in K(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. K2 Exiting program.\n";
+        cout << "Error. Invalid entry in K(), exiting program.\n";
         exit(-1);
       }
     }
   }
   else   if (tk.chars == "Move") {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in K token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in K token.chars = " << tk.chars << endl;
 
       if (tk.ID == 1002) {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in K token.chars = " << tk.chars << endl;
+        // cout << "in K token.chars = " << tk.chars << endl;
 
         if (tk.chars == "Show") {
+          node_t t(tk);
+          p->children.push_back(t);
           tk = getNextToken(in);
-          cout << "in K token.chars = " << tk.chars << endl;
+          // cout << "in K token.chars = " << tk.chars << endl;
 
           if (tk.ID == 1002) {
+            node_t t(tk);
+            p->children.push_back(t);
             tk = getNextToken(in);
-            cout << "in K token.chars = " << tk.chars << endl;
+            // cout << "in K token.chars = " << tk.chars << endl;
           }
           else {
-            cout << "Error. K3 Exiting program.\n";
+            cout << "Error. Invalid entry in K(), exiting program.\n";
             exit(-1);
           }
         }
         else {
-          cout << "Error. K4 Exiting program.\n";
+          cout << "Error. Invalid entry in K(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. K5 Exiting program.\n";
+        cout << "Error. Invalid entry in K(), exiting program.\n";
         exit(-1);
       }
   }
   else {
-    cout << "Error. K6 Exiting program.\n";
+    cout << "Error. Invalid entry in K(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* L(istream& in, Token& tk) {
-
-  cout << "in L token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('L');
+  p->level = ++levelNum;
+  // cout << "in L token.chars = " << tk.chars << endl;
   if (tk.chars == "Flip") {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in L token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in L token.chars = " << tk.chars << endl;
 
     if (tk.ID == 1002) {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in L token.chars = " << tk.chars << endl;
+      // cout << "in L token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. L1 Exiting program.\n";
+      cout << "Error. Invalid entry in L(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. L2 Exiting program.\n";
+    cout << "Error. Invalid entry in L(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* W(istream& in, Token& tk) {
-
-  cout << "in W token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('W');
+  p->level = ++levelNum;
+  // cout << "in W token.chars = " << tk.chars << endl;
   if (tk.ID == 1004) {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in W token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in W token.chars = " << tk.chars << endl;
 
     if (tk.chars == ".") {
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in W token.chars = " << tk.chars << endl;
+      // cout << "in W token.chars = " << tk.chars << endl;
     }
     else if (tk.chars == "+" || tk.chars == "%" || tk.chars == "&"){
+      node_t t(tk);
+      p->children.push_back(t);
       tk = getNextToken(in);
-      cout << "in W token.chars = " << tk.chars << "\ncalling V()\n";
-      V(in, tk);
-      cout << "-- in w after v\n";
+      // cout << "in W token.chars = " << tk.chars << "\ncalling V()\n";
+      node_t* foo = V(in, tk);
+      p->children.push_back(*foo);
+      // cout << "-- in w after v\n";
       tk = getNextToken(in);
-      cout << "in W token.chars = " << tk.chars << endl;
+      // cout << "in W token.chars = " << tk.chars << endl;
       if (tk.ID == 1004) {
+        node_t t(tk);
+        p->children.push_back(t);
         tk = getNextToken(in);
-        cout << "in W token.chars = " << tk.chars << endl;
+        // cout << "in W token.chars = " << tk.chars << endl;
       }
       else {
-        cout << "Error. W1 Exiting program.\n";
+        cout << "Error. Invalid entry in W(), exiting program.\n";
         exit(-1);
       }
 
     }
     else {
-      cout << "Error. W2 Exiting program.\n";
+      cout << "Error. Invalid entry in W(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. W3 Exiting program.\n";
+    cout << "Error. Invalid entry in W(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }
 
 node_t* Z(istream& in, Token& tk) {
-
-  cout << "in Z token.chars = " << tk.chars << endl;
+  node_t* p= new node_t('Z');
+  p->level = ++levelNum;
+  // cout << "in Z token.chars = " << tk.chars << endl;
   if (tk.ID == 1002) {
-    //node_t* p = getNode(A);
-    //p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in Z token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in Z token.chars = " << tk.chars << endl;
   }
   else if (tk.ID == 1004) {
-    // node_t* p = getNode(A);
-    // p->token1 = tk;
+    node_t t(tk);
+    p->children.push_back(t);
     tk = getNextToken(in);
-    cout << "in Z token.chars = " << tk.chars << endl;
-    //p->child = S();
-    //S(in, tk);
+    // cout << "in Z token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. Z Exiting program.\n";
+    cout << "Error. Invalid entry in Z(), exiting program.\n";
     exit(-1);
   }
+  --levelNum;
+  return p;
 }

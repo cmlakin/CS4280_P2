@@ -2,32 +2,42 @@
 #define NODE_h
 
 #include <list>
+#include "token.h"
+
 
 using std::list;
 using std::string;
 
 struct node_t {
-  char value; // last character of word
-  list<string> words; // list of words each node holds
+  char label; // node label
+  Token token;
+  list<node_t> children; // list of words each node holds
   int level;
-  node_t* left;
-  node_t* right;
-  node_t* parent;
 
-  // value constructor
+
+  // parent constructor
   node_t(char value) {
-    this->value = value;
-    left = right = parent = nullptr;
+    this->label = value;
+  }
+
+  // token constructor
+  node_t(Token tk) {
+    token = tk;
+    //this->label = '\0';
   }
 
   // copy constructor
-  node_t(const node_t& rhs) { }
-
-  // destructor
-  ~node_t(void) {
-    delete left;  // calls delete of left, which recursively calls delete on its left and right
-    delete right;
+  node_t(const node_t& rhs) {
+    this->label  = rhs.label;
+    this->children = rhs.children;
+    this->token.chars = rhs.token.chars;
+    this->token.ID = rhs.token.ID;
+    this->level = rhs.level;
   }
+
+  // copy constructor
+  //node_t(const node_t& rhs) { }
+
 }; // end of struct node_t
 
 #endif
