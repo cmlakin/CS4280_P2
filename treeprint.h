@@ -5,6 +5,6 @@
 
 using std::ofstream;
 
-void preOrder(node_t*);
+void treePrint(node_t*);
 
 #endif

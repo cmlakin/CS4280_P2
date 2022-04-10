@@ -3,7 +3,7 @@
 #include "scanner.h"
 #include "node.h"
 #include "token.h"
-#include "preorder.h"
+#include "treeprint.h"
 #include "parser.h"
 
 using namespace std;
@@ -19,20 +19,15 @@ node_t* getRoot() {
 
 node_t * parser(istream& in) {
   Token tk;
-  Token tkS;
 
-  //node_t* root;
-  //cout << "in parser\n";
   if (in.eof()) {
     cout << "Error: Empty file, no content.\n";
     cout << "Exiting program.\n";
   }
 
   tk = getNextToken(in);
-
   root = S(in, tk);
-  preOrder(getRoot());
-  //cout << "end of parser\n";
+
   return root;
 }
 
@@ -88,22 +83,22 @@ node_t* S(istream& in, Token& tk){
           // cout << "-- in s after e\n";
         }
         else {
-          cout << "Error. S1 Exiting program.\n";
+          cout << "Error. Invalid entry in S(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. S2 Exiting program.\n";
+        cout << "Error. Invalid entry in S(), exiting program.\n";
         exit(-1);
       }
     }
     else {
-      cout << "Error. S3 Exiting program.\n";
+      cout << "Error. Invalid entry in S(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. S4 Exiting program.\n";
+    cout << "Error. Invalid entry in S(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -135,7 +130,7 @@ node_t* R(istream& in, Token& tk) {
     }
   }
   else {
-    cout << "Error. R1 Exiting program.\n";
+    cout << "Error. Invalid entry in R(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -159,12 +154,12 @@ node_t* E(istream& in, Token& tk) {
       // cout << "in E token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. E1 Exiting program.\n";
+      cout << "Error. Invalid entry in E(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. E2 Exiting program.\n";
+    cout << "Error. Invalid entry in E(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -189,12 +184,12 @@ node_t* A(istream& in, Token& tk) {
       // cout << "in A token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. A1 Exiting program.\n";
+      cout << "Error. Invalid entry in A(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. A2 Exiting program.\n";
+    cout << "Error. Invalid entry in A(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -225,7 +220,7 @@ node_t* B(istream& in, Token& tk) {
       // cout << "in B token.chars = " << tk.chars << "\n calling B\n";
     }
     else {
-      cout << "Error. B1 Exiting program.\n";
+      cout << "Error. Invalid entry in B(), exiting program.\n";
       exit(-1);
     }
   }
@@ -304,7 +299,7 @@ node_t* C(istream& in, Token& tk) {
     // cout << "in C token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. C Exiting program.\n";
+    cout << "Error. Invalid entry in C(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -360,7 +355,7 @@ node_t* D(istream& in, Token& tk) {
     // cout << "in D token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. D Exiting program.\n";
+    cout << "Error. Invalid entry in D(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -405,12 +400,12 @@ node_t* F(istream& in, Token& tk) {
           //cout << "in F token.chars = " << tk.chars << endl;
         }
         else {
-          cout << "Error. F1 Exiting program.\n";
+          cout << "Error. Invalid entry in F(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. F2 Exiting program.\n";
+        cout << "Error. Invalid entry in F(), exiting program.\n";
         exit(-1);
       }
     }
@@ -443,18 +438,18 @@ node_t* F(istream& in, Token& tk) {
           // cout << "in F token.chars = " << tk.chars << endl;
         }
         else {
-          cout << "Error. F3 Exiting program.\n";
+          cout << "Error. Invalid entry in F(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. F2 Exiting program.\n";
+        cout << "Error. Invalid entry in F(), exiting program.\n";
         exit(-1);
       }
     }
   }
   else {
-    cout << "Error. F Exiting program.\n";
+    cout << "Error. Invalid entry in F(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -484,17 +479,17 @@ node_t* G(istream& in, Token& tk) {
         // cout << "in G token.chars = " << tk.chars << endl;
       }
       else {
-        cout << "Error. G1 Exiting program.\n";
+        cout << "Error. Invalid entry in G(), exiting program.\n";
         exit(-1);
       }
     }
     else {
-      cout << "Error. G2 Exiting program.\n";
+      cout << "Error. Invalid entry in G(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. G3 Exiting program.\n";
+    cout << "Error. Invalid entry in G(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -519,7 +514,7 @@ node_t* T(istream& in, Token& tk) {
     // cout << "in T token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. T Exiting program.\n";
+    cout << "Error. Invalid entry in T(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -549,7 +544,7 @@ node_t* V(istream& in, Token& tk) {
     // cout << "in V token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. V Exiting program.\n";
+    cout << "Error. Invalid entry in V(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -572,7 +567,7 @@ node_t* H(istream& in, Token& tk) {
     // cout << "in H token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. H Exiting program.\n";
+    cout << "Error. Invalid entry in H(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -601,12 +596,12 @@ node_t* J(istream& in, Token& tk) {
       // cout << "in J token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. J1 Exiting program.\n";
+      cout << "Error. Invalid entry in J(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. J2 Exiting program.\n";
+    cout << "Error. Invalid entry in J(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -642,12 +637,12 @@ node_t* K(istream& in, Token& tk) {
           // cout << "in K token.chars = " << tk.chars << endl;
         }
         else {
-          cout << "Error. K1 Exiting program.\n";
+          cout << "Error. Invalid entry in K(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. K2 Exiting program.\n";
+        cout << "Error. Invalid entry in K(), exiting program.\n";
         exit(-1);
       }
     }
@@ -677,22 +672,22 @@ node_t* K(istream& in, Token& tk) {
             // cout << "in K token.chars = " << tk.chars << endl;
           }
           else {
-            cout << "Error. K3 Exiting program.\n";
+            cout << "Error. Invalid entry in K(), exiting program.\n";
             exit(-1);
           }
         }
         else {
-          cout << "Error. K4 Exiting program.\n";
+          cout << "Error. Invalid entry in K(), exiting program.\n";
           exit(-1);
         }
       }
       else {
-        cout << "Error. K5 Exiting program.\n";
+        cout << "Error. Invalid entry in K(), exiting program.\n";
         exit(-1);
       }
   }
   else {
-    cout << "Error. K6 Exiting program.\n";
+    cout << "Error. Invalid entry in K(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -716,12 +711,12 @@ node_t* L(istream& in, Token& tk) {
       // cout << "in L token.chars = " << tk.chars << endl;
     }
     else {
-      cout << "Error. L1 Exiting program.\n";
+      cout << "Error. Invalid entry in L(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. L2 Exiting program.\n";
+    cout << "Error. Invalid entry in L(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -761,18 +756,18 @@ node_t* W(istream& in, Token& tk) {
         // cout << "in W token.chars = " << tk.chars << endl;
       }
       else {
-        cout << "Error. W1 Exiting program.\n";
+        cout << "Error. Invalid entry in W(), exiting program.\n";
         exit(-1);
       }
 
     }
     else {
-      cout << "Error. W2 Exiting program.\n";
+      cout << "Error. Invalid entry in W(), exiting program.\n";
       exit(-1);
     }
   }
   else {
-    cout << "Error. W3 Exiting program.\n";
+    cout << "Error. Invalid entry in W(), exiting program.\n";
     exit(-1);
   }
   --levelNum;
@@ -796,7 +791,7 @@ node_t* Z(istream& in, Token& tk) {
     // cout << "in Z token.chars = " << tk.chars << endl;
   }
   else {
-    cout << "Error. Z Exiting program.\n";
+    cout << "Error. Invalid entry in Z(), exiting program.\n";
     exit(-1);
   }
   --levelNum;

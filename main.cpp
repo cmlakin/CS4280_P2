@@ -12,11 +12,12 @@
 #include <fstream>
 #include <type_traits>
 #include "parser.h"
+#include "treeprint.h"
 
 using namespace std;
 
 int main(int argc, char * argv[]) {
-  cout << "*** in main\n";
+  //cout << "*** in main\n";
   char* filenameIn;
   ifstream inFile;
 
@@ -38,6 +39,6 @@ int main(int argc, char * argv[]) {
     parser(cin);
   }
 
-  cout << "End of program.\n";
+  treePrint(getRoot());
   return 0;
 }

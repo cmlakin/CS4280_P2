@@ -132,14 +132,11 @@ bool kwCheck(string& str) {
   if (counter == 13){
     return false;
   }
-
+  ;
 }
 
 Token FSDriver(string& fileString, int line) // assume nextChar set, and used as column index
 {
-  // cout << "--- in FSDriver\n";
-  // state_t state = INITIAL; // (0 = S1 here)
-  // state_t nextState;
   int state = 0; //INITIAL; // (0 = S1 here)
   int nextState;
   Token token;
@@ -192,7 +189,6 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
 
       }
       else if (nextState >= ID_tk && nextState <= CMT_tk){
-        // TODO build out individual token types
         token.ID = nextState;
         token.chars = s;
 
@@ -205,7 +201,7 @@ Token FSDriver(string& fileString, int line) // assume nextChar set, and used as
       token.ID = 500;
       return token;
     }
-    else {  // not FINAL  // this would be the default statement in switch
+    else {  // not FINAL
       state = nextState;
       char addChar = getChar(fileString);
       //cout << "addChar = " << addChar << endl;
